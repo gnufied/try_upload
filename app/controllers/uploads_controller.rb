@@ -3,7 +3,7 @@ class UploadsController < ApplicationController
   end
 
   def create
-    file_data = params[:files].first
+    file_data = params[:fileToUpload]
     StuffUploader.check_for_processing?(file_data.content_type)
     @asset = Article.new(:stuff => file_data)
     if @asset.save
