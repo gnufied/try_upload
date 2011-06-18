@@ -51,4 +51,19 @@ class StuffUploader < CarrierWave::Uploader::Base
     process :resize_to_fill => [800,480]
   end
 
+  def self.check_for_processing?(content_type)
+    if content_type !~ /^image*/
+      StuffUploader.enable_processing = false
+    else
+      StuffUploader.enable_processing = true
+    end
+  end
+
+  def preview_url
+    if filename =~ /jpg|png|gif/
+      url(:thumb)
+    else
+      "/images/rails.png"
+    end
+  end
 end
